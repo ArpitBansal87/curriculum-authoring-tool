@@ -1,143 +1,196 @@
+import { mainState } from "./APIStore";
 import React, { useState } from "react";
 export const MyContext = React.createContext();
 
-const mainState2 = {
-  subject: "mathematics",
-  children: {
-    1: {
-      name: "c-1",
-      children: {
-        101: {
-          name: "H-1",
-          children: {
-            1001: {
-              name: "c-1 h-1 s-1",
-            },
-            1002: {
-              name: "c-1 h-1 s-2",
-            },
-            1003: {
-              name: "c-1 h-1 s-3",
-            },
-            1004: {
-              name: "c-1 h-1 s-2",
-            },
-          },
-          childrenAllIds: [1001, 1002, 1003, 1004],
-        },
-        102: {
-          name: "h-2",
-          children: {},
-          childrenAllIds: [],
-        },
-      },
-      childrenAllIds: [101, 102],
-    },
-  },
-  childrenAllIds: [1],
-};
-
-const mainState = {
-  subject: "mathematics",
-  children: {
-    1: {
-      name: "c-1",
-      children: {
-        101: {
-          name: "H-1",
-          children: {
-            1001: {
-              name: "c-1 h-1 s-1",
-            },
-            1002: {
-              name: "c-1 h-1 s-2",
-            },
-            1003: {
-              name: "c-1 h-1 s-3",
-            },
-            1004: {
-              name: "c-1 h-1 s-2",
-            },
-          },
-          childrenAllIds: [1001, 1002, 1003, 1004],
-        },
-        102: {
-          name: "h-2",
-          children: {},
-          childrenAllIds: [],
-        },
-        103: {
-          name: "h-3",
-          children: {},
-          childrenAllIds: [],
-        },
-        104: {
-          name: "h-4",
-          children: {},
-          childrenAllIds: [],
-        },
-      },
-      childrenAllIds: [101, 102, 103, 104],
-    },
-  },
-  childrenAllIds: [1],
-};
-
 export default function ContextWrapper({ children }) {
   const [state, setState] = useState(mainState);
+
+  const HandleChangeStandard = (value, chapterId, headingId, subheadingId) => {
+    const newState = state;
+    if (chapterId && headingId && subheadingId) {
+      newState.children[chapterId].children[headingId].children[
+        subheadingId
+      ].name = value;
+    } else if (chapterId && headingId) {
+      newState.children[chapterId].children[headingId].name = value;
+    } else if (chapterId) {
+      newState.children[chapterId].name = value;
+    }
+
+    setState({ ...newState });
+  };
+
+  const trashStandard = (chapterId, headingId, subheadingId) => {
+    const newState = state;
+
+    if (chapterId && headingId && subheadingId) {
+      newState.children[chapterId].children[
+        headingId
+      ].childrenAllIds = newState.children[chapterId].children[
+        headingId
+      ].childrenAllIds.filter((id) => id !== subheadingId);
+      delete newState.children[chapterId].children[headingId].children[
+        subheadingId
+      ];
+    } else if (chapterId && headingId) {
+      newState.children[chapterId].childrenAllIds = newState.children[
+        chapterId
+      ].childrenAllIds.filter((id) => id !== headingId);
+      delete newState.children[chapterId].children[headingId];
+    } else if (chapterId) {
+      newState.childrenAllIds = newState.childrenAllIds.filter(
+        (id) => id !== chapterId
+      );
+      delete newState.children[chapterId];
+    }
+
+    setState({ ...newState });
+  };
+
+  const addStandard = (currentStandard, newStandard) => {
+    const newState = state;
+    const newId = Math.random();
+    if (currentStandard === "CHAPTER") {
+      newState.childrenAllIds = [...newState.childrenAllIds, newId];
+      newState.children[newId] = {
+        name: newStandard,
+        children: {},
+        childrenAllIds: [],
+      };
+    } else if (currentStandard === "HEADING") {
+      const getLastChapterId =
+        newState.childrenAllIds[newState.childrenAllIds.length - 1];
+
+      newState.children[getLastChapterId].childrenAllIds = [
+        ...newState.children[getLastChapterId].childrenAllIds,
+        newId,
+      ];
+      newState.children[getLastChapterId].children[newId] = {
+        name: newStandard,
+        children: {},
+        childrenAllIds: [],
+      };
+      setState({ ...newState });
+    } else if (currentStandard === "SUBHEADING") {
+      const getLastChapterId =
+        newState.childrenAllIds[newState.childrenAllIds.length - 1];
+
+      const getLastHeadingId =
+        newState.children[getLastChapterId].childrenAllIds[
+          newState.children[getLastChapterId].childrenAllIds.length - 1
+        ];
+      const getLastHeadingChildren =
+        newState.children[getLastChapterId].children[getLastHeadingId];
+
+      getLastHeadingChildren.children[newId] = { name: newStandard };
+      getLastHeadingChildren.childrenAllIds = [
+        ...getLastHeadingChildren.childrenAllIds,
+        newId,
+      ];
+    }
+  };
 
   const handleIndent = (chapterId, headingId, subHeadingId) => {
     const newState = state;
 
     if (chapterId && headingId && subHeadingId) {
-      alert("Maximum intend reached.");
+      alert("Maximum intend level reached.");
     } else if (chapterId && headingId) {
       const { children, childrenAllIds } = newState.children[chapterId];
       const { name } = children[headingId];
-      const getPreviousIndex =
+
+      const getPreviousHeadingOrder =
         childrenAllIds.findIndex((id) => id === headingId) - 1;
-      const previousId = childrenAllIds[getPreviousIndex];
 
-      const newSubHeading = {};
-      newSubHeading[headingId] = { name };
-      children[previousId].children = {
-        ...children[previousId].children,
-        ...newSubHeading,
-      };
-      children[previousId].childrenAllIds = [
-        ...children[previousId].childrenAllIds,
-        headingId,
-      ];
-      delete children[headingId];
-      const newChildrenAllIds = childrenAllIds.filter((id) => id !== headingId);
-      const newChildrenObject = newState.children;
-      newChildrenObject[chapterId].childrenAllIds = newChildrenAllIds;
+      if (getPreviousHeadingOrder === -1) {
+        alert("Your Chapter is having no heading.");
+      } else {
+        const takeAllHeadingIds = children[headingId].childrenAllIds.splice(
+          0,
+          children[headingId].childrenAllIds.length
+        );
 
-      setState({ ...state, children: newChildrenObject });
+        const previousHeadId = childrenAllIds[getPreviousHeadingOrder];
+
+        children[previousHeadId].children[headingId] = {
+          name,
+          children: {},
+          childrenAllIds: [],
+        };
+        /*
+         *   Merging the Children
+         */
+
+        children[previousHeadId].childrenAllIds = [
+          ...children[previousHeadId].childrenAllIds,
+          headingId,
+          ...takeAllHeadingIds,
+        ];
+
+        for (const i of takeAllHeadingIds) {
+          children[previousHeadId].children[i] = {
+            name: children[headingId].children[i].name,
+            children: {},
+            childrenAllIds: [],
+          };
+        }
+        delete children[headingId];
+
+        const newChildrenAllIds = childrenAllIds.filter(
+          (id) => id !== headingId
+        );
+
+        newState.children[chapterId].childrenAllIds = newChildrenAllIds;
+
+        setState({ ...state });
+      }
     } else if (chapterId) {
       if (newState.childrenAllIds.length === 1) {
         alert("One Chapter cannot be Subhead.");
       } else {
-        const { name } = newState.children[chapterId];
         /**
          * Moving from chapter
          * to heading and making sub-heading
          * */
+        const { name } = newState.children[chapterId];
         const { children, childrenAllIds } = newState;
-        delete children[chapterId];
-        const getPreviousIndex =
+
+        const getAllCurrentChapterId = children[chapterId].childrenAllIds;
+        const getBeforeChapterIndex =
           childrenAllIds.findIndex((id) => id === chapterId) - 1;
-        const previousId = childrenAllIds[getPreviousIndex];
-        const newHeading = { name, children: {}, chidrenAllId: [] };
-        children[previousId].children[chapterId] = newHeading;
-        children[previousId].childrenAllIds = [
-          ...children[previousId].childrenAllIds,
+        const getBeforeChapterId = childrenAllIds[getBeforeChapterIndex];
+
+        children[getBeforeChapterId].children[chapterId] = {
+          name,
+          childrenAllIds: [],
+          children: {},
+        };
+
+        children[getBeforeChapterId].childrenAllIds = [
+          ...children[getBeforeChapterId].childrenAllIds,
           chapterId,
         ];
-        const newchildrenAllIds = childrenAllIds.filter(
+
+        for (const i of getAllCurrentChapterId) {
+          children[getBeforeChapterId].childrenAllIds = [
+            ...children[getBeforeChapterId].childrenAllIds,
+            i,
+          ];
+          const childNamesOfHeading = children[chapterId].children[i].name;
+          children[getBeforeChapterId].children[i] = {
+            name: childNamesOfHeading,
+            children: {},
+            childrenAllIds: [],
+          };
+        }
+
+        const newChildrenAllIds = childrenAllIds.filter(
           (id) => id !== chapterId
         );
-        setState({ ...state, children, childrenAllIds: newchildrenAllIds });
+        newState.childrenAllIds = newChildrenAllIds;
+        delete newState.children[chapterId];
+
+        setState({ ...newState });
       }
     }
   };
@@ -159,7 +212,7 @@ export default function ContextWrapper({ children }) {
         findSubheadingIndex + 1,
         children[headingId].childrenAllIds.length
       );
-      console.log(children[headingId].childrenAllIds);
+
       children[subHeadingId] = {
         children: {},
         childrenAllIds: extractRemainingSubHeadingIds,
@@ -192,86 +245,58 @@ export default function ContextWrapper({ children }) {
 
       setState({ ...newState });
     } else if (chapterId && headingId) {
-      console.log("chapterId" + chapterId);
-      console.log("headingId" + headingId);
+      /* from heading
+       * to chapter
+       */
       const { children, childrenAllIds } = newState;
-
-      console.log(children);
-      console.log(childrenAllIds);
-
       const { name } = children[chapterId].children[headingId];
-
-      console.log(children[chapterId].childrenAllIds);
       const findHeadingIndex = children[chapterId].childrenAllIds.findIndex(
         (id) => id === headingId
       );
 
-      const slicingChildren = children[chapterId].childrenAllIds.slice(
-        findHeadingIndex,
-        children[chapterId].childrenAllIds.length
-      );
-      slicingChildren.shift();
+      if (children[chapterId].children[headingId].childrenAllIds.length !== 0) {
+        alert("You have Sub-heading to settle.");
+      } else if (findHeadingIndex) {
+        const slicingChildren = children[chapterId].childrenAllIds.slice(
+          findHeadingIndex,
+          children[chapterId].childrenAllIds.length
+        );
+        slicingChildren.shift();
 
-      console.log(slicingChildren);
-
-      children[headingId] = {
-        name,
-        children: {},
-        childrenAllIds: slicingChildren,
-      };
-
-      for (const i of slicingChildren) {
-        children[headingId].children[i] = {
-          name: children[chapterId].children[i].name,
+        children[headingId] = {
+          name,
           children: {},
-          childrenAllIds: [],
+          childrenAllIds: slicingChildren,
         };
-      };
 
+        for (const i of slicingChildren) {
+          children[headingId].children[i] = {
+            name: children[chapterId].children[i].name,
+            children: {},
+            childrenAllIds: [],
+          };
+        }
 
-      console.log(children[chapterId].childrenAllIds=children[chapterId].childrenAllIds.slice(0,findHeadingIndex));
-      /////Deleteing Children of heading///\
-      for(const i of slicingChildren){
-        delete children[chapterId].children[i];
+        children[chapterId].childrenAllIds = children[
+          chapterId
+        ].childrenAllIds.slice(0, findHeadingIndex);
+
+        for (const i of slicingChildren) {
+          delete children[chapterId].children[i];
+        }
+        delete children[chapterId].children[headingId];
+
+        const getChapterIndex = childrenAllIds.findIndex(
+          (id) => id === chapterId
+        );
+        newState.childrenAllIds.splice(getChapterIndex + 1, 0, headingId);
+
+        setState({ ...newState });
+      } else {
+        alert("No heading but sub headings are there.");
       }
-      delete children[chapterId].children[headingId];
-
-     const getChapterIndex=childrenAllIds.findIndex(id=>id===chapterId)
-     newState.childrenAllIds.splice(getChapterIndex+1,0,headingId)
-
-      console.log(newState);
-    
-
-     setState({...newState})
     } else if (chapterId) {
-      alert("Maximum outdent level.");
-    }
-  };
-
-  const HandleChangeStandard = (topicId, event) => {};
-
-  const trashStandard = (topicId) => {};
-
-  const addStandard = (currentStandard, newStandard) => {
-    const newState = state;
-    if (currentStandard === "HEADING") {
-      const newId = Math.random();
-      const newChildrenAllIds = (newState.childrenAllIds = [
-        ...newState.childrenAllIds,
-        newId,
-      ]);
-      const newChapter = {};
-      newChapter[newId] = {
-        name: newStandard,
-        children: { children: {}, childrenAllIds: [] },
-        childrenAllIds: [],
-      };
-      setState({
-        ...state,
-        childrenAllIds: newChildrenAllIds,
-        children: { ...state.children, ...newChapter },
-      });
-    } else if (currentStandard === "SUB_HEADING") {
+      alert("Maximum outdent level reached.");
     }
   };
 

@@ -14,10 +14,16 @@ export default function Index() {
   const chapter = children;
   const chapterAllIds = childrenAllIds;
 
-  useEffect(() => {
-    console.log(getConsumer.state);
-  });
+  useEffect(() => {});
 
+  const changeOutdentInput = () => {
+    if (currentIndent === "SUBHEADING") setCurrentIndent("HEADING");
+    else if (currentIndent === "HEADING") setCurrentIndent("CHAPTER");
+  };
+  const changeIndentInput = () => {
+    if (currentIndent === "CHAPTER") setCurrentIndent("HEADING");
+    else if (currentIndent === "HEADING") setCurrentIndent("SUBHEADING");
+  };
   const {
     handleIndent,
     handleOutdent,
@@ -28,9 +34,9 @@ export default function Index() {
 
   const setMarginLeft = (standardType) => {
     const UNITS = "em";
-    if (standardType === "chapter") return 0 + UNITS;
-    else if (standardType === "heading") return 1 + UNITS;
-    else if (standardType === "subHeading") return 2 + UNITS;
+    if (standardType === "CHAPTER") return 0 + UNITS;
+    else if (standardType === "HEADING") return 1 + UNITS;
+    else if (standardType === "SUBHEADING") return 2 + UNITS;
 
     return "";
   };
@@ -69,14 +75,18 @@ export default function Index() {
                     <img
                       className="cursor-pointer"
                       src={LeftArrow}
-                      alt="left arrow"
-                      onClick={() => handleOutdent(chapterId)}
+                      alt="left indent"
+                      onClick={() => {
+                        handleOutdent(chapterId);
+                      }}
                     />{" "}
                     <img
                       className="cursor-pointer"
                       src={RightArrow}
-                      alt="right arrow"
-                      onClick={() => handleIndent(chapterId)}
+                      alt="right indent"
+                      onClick={() => {
+                        handleIndent(chapterId);
+                      }}
                     />{" "}
                     <img
                       className="cursor-pointer"
@@ -88,7 +98,7 @@ export default function Index() {
                   <div className="subject-col">
                     <div
                       className="level"
-                      style={{ marginLeft: `${setMarginLeft("chapter")}` }}
+                      style={{ marginLeft: `${setMarginLeft("CHAPTER")}` }}
                     />
                   </div>
                   <div className="subject-col">
@@ -96,7 +106,9 @@ export default function Index() {
                       className="chapter"
                       type="text"
                       value={name}
-                      onChange={(event) => HandleChangeStandard()}
+                      onChange={(event) =>
+                        HandleChangeStandard(event, chapterId)
+                      }
                     />
                   </div>
                 </div>
@@ -118,26 +130,32 @@ export default function Index() {
                               className="cursor-pointer"
                               src={LeftArrow}
                               alt="left arrow"
-                              onClick={() => handleOutdent(chapterId,headingId)}
+                              onClick={() => {
+                                handleOutdent(chapterId, headingId);
+                              }}
                             />{" "}
                             <img
                               className="cursor-pointer"
                               src={RightArrow}
                               alt="right arrow"
-                              onClick={() => handleIndent(chapterId, headingId)}
+                              onClick={() => {
+                                handleIndent(chapterId, headingId);
+                              }}
                             />{" "}
                             <img
                               className="cursor-pointer"
                               src={Trash}
                               alt="dustbin"
-                              onClick={() => trashStandard()}
+                              onClick={() =>
+                                trashStandard(chapterId, headingId)
+                              }
                             />
                           </div>
                           <div className="heading-col">
                             <div
                               className="level"
                               style={{
-                                marginLeft: `${setMarginLeft("heading")}`,
+                                marginLeft: `${setMarginLeft("HEADING")}`,
                               }}
                             />
                           </div>
@@ -146,19 +164,25 @@ export default function Index() {
                               className="heading"
                               type="text"
                               value={name}
-                              onChange={(event) => HandleChangeStandard()}
+                              onChange={(event) =>
+                                HandleChangeStandard(
+                                  event.target.value,
+                                  chapterId,
+                                  headingId
+                                )
+                              }
                             />
                           </div>
                         </div>
 
                         <div className="sub-heading-box">
                           {subHeadingAllIds &&
-                            subHeadingAllIds.map((subTopicId) => {
-                              const { name } = subHeading[subTopicId];
+                            subHeadingAllIds.map((subHeadingId) => {
+                              const { name } = subHeading[subHeadingId];
                               return (
                                 <div
                                   className="sub-heading-row"
-                                  key={subTopicId}
+                                  key={subHeadingId}
                                 >
                                   <div className="sub-heading-col">
                                     <img
@@ -170,11 +194,13 @@ export default function Index() {
                                       className="cursor-pointer"
                                       src={LeftArrow}
                                       alt="left arrow"
-                                      onClick={() =>  handleOutdent(
-                                        chapterId,
-                                        headingId,
-                                        subTopicId
-                                      )}
+                                      onClick={() => {
+                                        handleOutdent(
+                                          chapterId,
+                                          headingId,
+                                          subHeadingId
+                                        );
+                                      }}
                                     />{" "}
                                     <img
                                       className="cursor-pointer"
@@ -184,7 +210,7 @@ export default function Index() {
                                         handleIndent(
                                           chapterId,
                                           headingId,
-                                          subTopicId
+                                          subHeadingId
                                         )
                                       }
                                     />{" "}
@@ -192,7 +218,13 @@ export default function Index() {
                                       className="cursor-pointer"
                                       src={Trash}
                                       alt="dustbin"
-                                      onClick={() => trashStandard()}
+                                      onClick={() =>
+                                        trashStandard(
+                                          chapterId,
+                                          headingId,
+                                          subHeadingId
+                                        )
+                                      }
                                     />
                                   </div>
                                   <div className="sub-heading-col">
@@ -200,7 +232,7 @@ export default function Index() {
                                       className="level"
                                       style={{
                                         marginLeft: `${setMarginLeft(
-                                          "subHeading"
+                                          "SUBHEADING"
                                         )}`,
                                       }}
                                     />
@@ -211,7 +243,12 @@ export default function Index() {
                                       type="text"
                                       value={name}
                                       onChange={(event) =>
-                                        HandleChangeStandard()
+                                        HandleChangeStandard(
+                                          event.target.value,
+                                          chapterId,
+                                          headingId,
+                                          subHeadingId
+                                        )
                                       }
                                     />
                                   </div>
@@ -237,13 +274,13 @@ export default function Index() {
                 className="cursor-pointer"
                 src={LeftArrow}
                 alt="left arrow"
-                onClick={() => {}}
+                onClick={() => changeOutdentInput()}
               />{" "}
               <img
                 className="cursor-pointer"
                 src={RightArrow}
                 alt="right arrow"
-                onClick={() => {}}
+                onClick={() => changeIndentInput()}
               />{" "}
               <img
                 className="cursor-pointer"
@@ -255,14 +292,20 @@ export default function Index() {
             <div className="standard-col">
               <div
                 className="level"
-                style={{ marginLeft: `${setMarginLeft("chapter")}` }}
+                style={{ marginLeft: `${setMarginLeft(currentIndent)}` }}
               />
             </div>
             <div className="standard-col">
               <input
-                className="sub-heading"
+                className={
+                  currentIndent === "CHAPTER"
+                    ? "chapter"
+                    : currentIndent === "HEADING"
+                    ? "heading"
+                    : "sub-heading"
+                }
                 type="text"
-                placeholder="Enter the required standard."
+                placeholder="Enter the required standard. E.g Mathematics "
                 required
                 autoFocus
                 value={newStandard}

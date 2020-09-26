@@ -59,7 +59,7 @@
               img {
                 filter: contrast(0);
                 &:hover {
-                  filter: contrast(100);
+                  filter: contrast(120%);
                 }
               }
             }
@@ -101,7 +101,7 @@
                 img {
                   filter: contrast(0);
                   &:hover {
-                    filter: contrast(100);
+                    filter: contrast(120%);
                   }
                 }
               }
@@ -143,7 +143,7 @@
                   img {
                     filter: contrast(0);
                     &:hover {
-                      filter: contrast(100);
+                      filter: contrast(120%);
                     }
                   }
                 }
@@ -191,7 +191,7 @@
           img {
             filter: contrast(0);
             &:hover {
-              filter: contrast(100);
+              filter: contrast(120%);
             }
           }
         }
@@ -216,6 +216,22 @@
           outline: none;
           width: 100%;
         }
+        .chapter {
+          color: #2dadba;
+          font-weight: bold;
+          font-size: 18px;
+        }
+        .heading {
+          color: black;
+          font-weight: bold;
+          font-size: 16px;
+        }
+        .sub-heading {
+          color: #888;
+          font-weight: bold;
+          font-size: 14px;
+        }
+
       }
     }
   }
