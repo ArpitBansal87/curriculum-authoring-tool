@@ -1,0 +1,16 @@
+.load-modal-wrapper
+{
+    padding: 1em;;
+    .close-header
+    {
+        text-align: right;
+
+        img{
+            filter: contrast(0);
+
+            &:hover{
+                filter: contrast(100);
+            }
+        }
+    }
+}
