@@ -1,9 +1,9 @@
-import { mainState } from "./APIStore";
+import { store } from "./APIStore";
 import React, { useState } from "react";
 export const MyContext = React.createContext();
 
 export default function ContextWrapper({ children }) {
-  const [state, setState] = useState(mainState);
+  const [state, setState] = useState(store);
 
   const HandleChangeStandard = (value, chapterId, headingId, subheadingId) => {
     const newState = state;

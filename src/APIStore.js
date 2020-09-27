@@ -1,4 +1,4 @@
-export const mainState = {
+export const store = {
   subject: "mathematics",
   children: {
     1: {
