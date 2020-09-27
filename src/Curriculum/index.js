@@ -1,9 +1,9 @@
 import React, { useContext, useState } from "react";
 import "./index.scss";
-import RightArrow from "./SVG/right-arrow.svg";
-import LeftArrow from "./SVG/left-arrow.svg";
-import Move from "./SVG/move.svg";
-import Trash from "./SVG/trash.svg";
+import RightArrow from "./svg/right-arrow.svg";
+import LeftArrow from "./svg/left-arrow.svg";
+import Move from "./svg/move.svg";
+import Trash from "./svg/trash.svg";
 import { MyContext } from "../appContext";
 
 export default function Index() {

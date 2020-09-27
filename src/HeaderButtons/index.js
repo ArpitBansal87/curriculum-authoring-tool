@@ -25,9 +25,9 @@ export default function HeaderButtons() {
   return (
     <div className="header-buttons-wrapper">
       <span
-        className="upload-wrapper upload-file-wrapper"
+        className="upload-wrapper"
       >
-         <label htmlFor="fusk">Browse JSON</label>
+         <label htmlFor="fusk">Upload JSON</label>
         <input
           id="fusk"
           type="file"
@@ -43,7 +43,7 @@ export default function HeaderButtons() {
         )}`}
         download="API.json"
       >
-        Save
+        Download JSON
       </a>
       
     </div>
