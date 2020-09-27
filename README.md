@@ -25,6 +25,7 @@ Created a tool for teachers to author curriculum for a subject. The curriculam s
     to load the JSON to create the structure again   
  - [x] No backend used
  - [x] UI features Eg. tooltips
+ - [x] UI Validations Eg. reaching highest or lowest indent, parent child relation 
 
 ## TODO
 -  Drag and drop feature which user can move chapter heading subheading
