@@ -69,32 +69,44 @@ export default function Index() {
               <div className="subject-box" key={chapterId}>
                 <div className="subject-row">
                   <div className="subject-col">
-                    <img className="cursor-pointer" src={Move} alt="move" />{" "}
-                    <img
-                      className="cursor-pointer"
-                      src={LeftArrow}
-                      alt="left indent"
-                      onClick={() => {
-                        handleOutdent(chapterId);
-                      }}
-                    />{" "}
-                    <img
-                      className="cursor-pointer"
-                      src={RightArrow}
-                      alt="right indent"
-                      onClick={() => {
-                        handleIndent(chapterId);
-                      }}
-                    />{" "}
-                    <img
-                      className="cursor-pointer"
-                      src={Trash}
-                      alt="dustbin"
-                      onClick={() => {
-                        trashStandard(chapterId);
-                        setCurrentIndent("CHAPTER");
-                      }}
-                    />
+                    <div className="tooltip-wrapper">
+                      <img className="cursor-pointer" src={Move} alt="move" />
+                      <span className="tooltiptext">Move</span>
+                    </div>{" "}
+                    <div className="tooltip-wrapper">
+                      <img
+                        className="cursor-pointer"
+                        src={LeftArrow}
+                        alt="left indent"
+                        onClick={() => {
+                          handleOutdent(chapterId);
+                        }}
+                      />
+                      <span className="tooltiptext">Outdent</span>
+                    </div>{" "}
+                    <div className="tooltip-wrapper">
+                      <img
+                        className="cursor-pointer"
+                        src={RightArrow}
+                        alt="right indent"
+                        onClick={() => {
+                          handleIndent(chapterId);
+                        }}
+                      />{" "}
+                      <span className="tooltiptext">Indent</span>
+                    </div>
+                    <div className="tooltip-wrapper">
+                      <img
+                        className="cursor-pointer"
+                        src={Trash}
+                        alt="dustbin"
+                        onClick={() => {
+                          trashStandard(chapterId);
+                          setCurrentIndent("CHAPTER");
+                        }}
+                      />
+                      <span className="tooltiptext">Delete</span>
+                    </div>
                   </div>
                   <div className="subject-col">
                     <div
@@ -123,36 +135,49 @@ export default function Index() {
                       <React.Fragment key={headingId}>
                         <div className="heading-row" key={headingId}>
                           <div className="heading-col">
-                            <img
-                              className="cursor-pointer"
-                              src={Move}
-                              alt="move"
-                            />{" "}
-                            <img
-                              className="cursor-pointer"
-                              src={LeftArrow}
-                              alt="left arrow"
-                              onClick={() => {
-                                handleOutdent(chapterId, headingId);
-                              }}
-                            />{" "}
-                            <img
-                              className="cursor-pointer"
-                              src={RightArrow}
-                              alt="right arrow"
-                              onClick={() => {
-                                handleIndent(chapterId, headingId);
-                              }}
-                            />{" "}
-                            <img
-                              className="cursor-pointer"
-                              src={Trash}
-                              alt="dustbin"
-                              onClick={() => {
-                                trashStandard(chapterId, headingId);
-                                setCurrentIndent("HEADING");
-                              }}
-                            />
+                            <div className="tooltip-wrapper">
+                              <img
+                                className="cursor-pointer"
+                                src={Move}
+                                alt="move"
+                              />{" "}
+                              <span className="tooltiptext">Move</span>
+                            </div>
+
+                            <div className="tooltip-wrapper">
+                              <img
+                                className="cursor-pointer"
+                                src={LeftArrow}
+                                alt="left arrow"
+                                onClick={() => {
+                                  handleOutdent(chapterId, headingId);
+                                }}
+                              />{" "}
+                              <span className="tooltiptext">Outdent</span>
+                            </div>
+                            <div className="tooltip-wrapper">
+                              <img
+                                className="cursor-pointer"
+                                src={RightArrow}
+                                alt="right arrow"
+                                onClick={() => {
+                                  handleIndent(chapterId, headingId);
+                                }}
+                              />{" "}
+                              <span className="tooltiptext">Indent</span>
+                            </div>
+                            <div className="tooltip-wrapper">
+                              <img
+                                className="cursor-pointer"
+                                src={Trash}
+                                alt="dustbin"
+                                onClick={() => {
+                                  trashStandard(chapterId, headingId);
+                                  setCurrentIndent("HEADING");
+                                }}
+                              />
+                              <span className="tooltiptext">Delete</span>
+                            </div>
                           </div>
                           <div className="heading-col">
                             <div
@@ -188,48 +213,66 @@ export default function Index() {
                                   key={subHeadingId}
                                 >
                                   <div className="sub-heading-col">
-                                    <img
-                                      className="cursor-pointer"
-                                      src={Move}
-                                      alt="move"
-                                    />{" "}
-                                    <img
-                                      className="cursor-pointer"
-                                      src={LeftArrow}
-                                      alt="left arrow"
-                                      onClick={() => {
-                                        handleOutdent(
-                                          chapterId,
-                                          headingId,
-                                          subHeadingId
-                                        );
-                                      }}
-                                    />{" "}
-                                    <img
-                                      className="cursor-pointer"
-                                      src={RightArrow}
-                                      alt="right arrow"
-                                      onClick={() =>
-                                        handleIndent(
-                                          chapterId,
-                                          headingId,
-                                          subHeadingId
-                                        )
-                                      }
-                                    />{" "}
-                                    <img
-                                      className="cursor-pointer"
-                                      src={Trash}
-                                      alt="dustbin"
-                                      onClick={() => {
-                                        trashStandard(
-                                          chapterId,
-                                          headingId,
-                                          subHeadingId
-                                        );
-                                        setCurrentIndent("SUBHEADING");
-                                      }}
-                                    />
+                                    <div className="tooltip-wrapper">
+                                      <img
+                                        className="cursor-pointer"
+                                        src={Move}
+                                        alt="move"
+                                      />{" "}
+                                      <span className="tooltiptext">Move</span>
+                                    </div>
+                                    <div className="tooltip-wrapper">
+                                      <img
+                                        className="cursor-pointer"
+                                        src={LeftArrow}
+                                        alt="left arrow"
+                                        onClick={() => {
+                                          handleOutdent(
+                                            chapterId,
+                                            headingId,
+                                            subHeadingId
+                                          );
+                                        }}
+                                      />{" "}
+                                      <span className="tooltiptext">
+                                        Outdent
+                                      </span>
+                                    </div>
+                                    <div className="tooltip-wrapper">
+                                      <img
+                                        className="cursor-pointer"
+                                        src={RightArrow}
+                                        alt="right arrow"
+                                        onClick={() =>
+                                          handleIndent(
+                                            chapterId,
+                                            headingId,
+                                            subHeadingId
+                                          )
+                                        }
+                                      />{" "}
+                                      <span className="tooltiptext">
+                                        Indent
+                                      </span>
+                                    </div>
+                                    <div className="tooltip-wrapper">
+                                      <img
+                                        className="cursor-pointer"
+                                        src={Trash}
+                                        alt="dustbin"
+                                        onClick={() => {
+                                          trashStandard(
+                                            chapterId,
+                                            headingId,
+                                            subHeadingId
+                                          );
+                                          setCurrentIndent("SUBHEADING");
+                                        }}
+                                      />
+                                      <span className="tooltiptext">
+                                        Delete
+                                      </span>
+                                    </div>
                                   </div>
                                   <div className="sub-heading-col">
                                     <div
@@ -273,25 +316,37 @@ export default function Index() {
         <form onSubmit={handleStandardSummit}>
           <div className="standard-row">
             <div className="standard-col">
-              <img className="cursor-pointer" src={Move} alt="move" />{" "}
-              <img
-                className="cursor-pointer"
-                src={LeftArrow}
-                alt="left arrow"
-                onClick={() => changeOutdentInput()}
-              />{" "}
-              <img
-                className="cursor-pointer"
-                src={RightArrow}
-                alt="right arrow"
-                onClick={() => changeIndentInput()}
-              />{" "}
-              <img
-                className="cursor-pointer"
-                src={Trash}
-                alt="dustbin"
-                onClick={() => trashStandard()}
-              />
+              <div className="tooltip-wrapper">
+                <img className="cursor-pointer" src={Move} alt="move" />
+                <span className="tooltiptext">Move</span>
+              </div>{" "}
+              <div className="tooltip-wrapper">
+                <img
+                  className="cursor-pointer"
+                  src={LeftArrow}
+                  alt="left arrow"
+                  onClick={() => changeOutdentInput()}
+                />{" "}
+                <span className="tooltiptext">Outdent</span>
+              </div>{" "}
+              <div className="tooltip-wrapper">
+                <img
+                  className="cursor-pointer"
+                  src={RightArrow}
+                  alt="right arrow"
+                  onClick={() => changeIndentInput()}
+                />{" "}
+                <span className="tooltiptext">Indent</span>
+              </div>{" "}
+              <div className="tooltip-wrapper">
+                <img
+                  className="cursor-pointer"
+                  src={Trash}
+                  alt="dustbin"
+                  onClick={() => trashStandard()}
+                />
+                <span className="tooltiptext">Delete</span>
+              </div>{" "}
             </div>
             <div className="standard-col">
               <div

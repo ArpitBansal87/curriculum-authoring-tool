@@ -23,6 +23,7 @@
         .sub-heading {
           font-size: 12px;
           color: #888;
+          font-weight: unset;
         }
         &:first-child {
           width: 8em;
@@ -58,10 +59,50 @@
               width: 7em;
               display: flex;
               justify-content: space-around;
-              img {
-                filter: contrast(0);
+              .tooltip-wrapper {
+                display: flex;
+                position: relative;
                 &:hover {
-                  filter: contrast(120%);
+                  .tooltiptext {
+                    visibility: visible;
+                    opacity: 1;
+                  }
+                }
+                .tooltiptext {
+                  visibility: hidden;
+                  width: 120px;
+                  background-color: #555;
+                  color: #fff;
+                  text-align: center;
+                  border-radius: 6px;
+                  padding: 5px 0;
+                  position: absolute;
+                  z-index: 1;
+                  bottom: 125%;
+                  left: 50%;
+                  margin-left: -60px;
+                  opacity: 0;
+                  transition: opacity 0.3s;
+
+                  &::after {
+                    content: "";
+                    position: absolute;
+                    top: 100%;
+                    left: 50%;
+                    margin-left: -5px;
+                    border-width: 5px;
+                    border-style: solid;
+                    border-color: #555 transparent transparent transparent;
+                  }
+                }
+
+                img {
+                  filter: contrast(0);
+                  position: relative;
+                  display: inline-block;
+                  &:hover {
+                    filter: contrast(120%);
+                  }
                 }
               }
             }
@@ -97,13 +138,55 @@
             width: 100%;
             .heading-col {
               &:first-child {
-                width: 7em;
-                display: flex;
-                justify-content: space-around;
-                img {
-                  filter: contrast(0);
-                  &:hover {
-                    filter: contrast(120%);
+                &:first-child {
+                  width: 7em;
+                  display: flex;
+                  justify-content: space-around;
+                  .tooltip-wrapper {
+                    display: flex;
+                    position: relative;
+                    &:hover {
+                      .tooltiptext {
+                        visibility: visible;
+                        opacity: 1;
+                      }
+                    }
+                    .tooltiptext {
+                      visibility: hidden;
+                      width: 120px;
+                      background-color: #555;
+                      color: #fff;
+                      text-align: center;
+                      border-radius: 6px;
+                      padding: 5px 0;
+                      position: absolute;
+                      z-index: 1;
+                      bottom: 125%;
+                      left: 50%;
+                      margin-left: -60px;
+                      opacity: 0;
+                      transition: opacity 0.3s;
+    
+                      &::after {
+                        content: "";
+                        position: absolute;
+                        top: 100%;
+                        left: 50%;
+                        margin-left: -5px;
+                        border-width: 5px;
+                        border-style: solid;
+                        border-color: #555 transparent transparent transparent;
+                      }
+                    }
+    
+                    img {
+                      filter: contrast(0);
+                      position: relative;
+                      display: inline-block;
+                      &:hover {
+                        filter: contrast(120%);
+                      }
+                    }
                   }
                 }
               }
@@ -139,13 +222,55 @@
               width: 100%;
               .sub-heading-col {
                 &:first-child {
-                  width: 7em;
-                  display: flex;
-                  justify-content: space-around;
-                  img {
-                    filter: contrast(0);
-                    &:hover {
-                      filter: contrast(120%);
+                  &:first-child {
+                    width: 7em;
+                    display: flex;
+                    justify-content: space-around;
+                    .tooltip-wrapper {
+                      display: flex;
+                      position: relative;
+                      &:hover {
+                        .tooltiptext {
+                          visibility: visible;
+                          opacity: 1;
+                        }
+                      }
+                      .tooltiptext {
+                        visibility: hidden;
+                        width: 120px;
+                        background-color: #555;
+                        color: #fff;
+                        text-align: center;
+                        border-radius: 6px;
+                        padding: 5px 0;
+                        position: absolute;
+                        z-index: 1;
+                        bottom: 125%;
+                        left: 50%;
+                        margin-left: -60px;
+                        opacity: 0;
+                        transition: opacity 0.3s;
+      
+                        &::after {
+                          content: "";
+                          position: absolute;
+                          top: 100%;
+                          left: 50%;
+                          margin-left: -5px;
+                          border-width: 5px;
+                          border-style: solid;
+                          border-color: #555 transparent transparent transparent;
+                        }
+                      }
+      
+                      img {
+                        filter: contrast(0);
+                        position: relative;
+                        display: inline-block;
+                        &:hover {
+                          filter: contrast(120%);
+                        }
+                      }
                     }
                   }
                 }
@@ -187,13 +312,55 @@
       width: 100%;
       .standard-col {
         &:first-child {
-          width: 7em;
-          display: flex;
-          justify-content: space-around;
-          img {
-            filter: contrast(0);
-            &:hover {
-              filter: contrast(120%);
+          &:first-child {
+            width: 7em;
+            display: flex;
+            justify-content: space-around;
+            .tooltip-wrapper {
+              display: flex;
+              position: relative;
+              &:hover {
+                .tooltiptext {
+                  visibility: visible;
+                  opacity: 1;
+                }
+              }
+              .tooltiptext {
+                visibility: hidden;
+                width: 120px;
+                background-color: #555;
+                color: #fff;
+                text-align: center;
+                border-radius: 6px;
+                padding: 5px 0;
+                position: absolute;
+                z-index: 1;
+                bottom: 125%;
+                left: 50%;
+                margin-left: -60px;
+                opacity: 0;
+                transition: opacity 0.3s;
+
+                &::after {
+                  content: "";
+                  position: absolute;
+                  top: 100%;
+                  left: 50%;
+                  margin-left: -5px;
+                  border-width: 5px;
+                  border-style: solid;
+                  border-color: #555 transparent transparent transparent;
+                }
+              }
+
+              img {
+                filter: contrast(0);
+                position: relative;
+                display: inline-block;
+                &:hover {
+                  filter: contrast(120%);
+                }
+              }
             }
           }
         }
