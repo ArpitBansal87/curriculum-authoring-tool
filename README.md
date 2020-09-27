@@ -25,10 +25,11 @@ Created a tool for teachers to author curriculum for a subject. The curriculam s
     to load the JSON to create the structure again   
  - [x] No backend used
  - [x] UI features Eg. tooltips
- - [ ] Row actions - Move
 
-## Features yet to implement
-- Drag and drop feature which user can move chapter heading subheading.
+## TODO
+-  Drag and drop feature which user can move chapter heading subheading
+-  Nesting with *n* number of sub children
+-  Testing
 
 ## Downloaded API Format
 ```
