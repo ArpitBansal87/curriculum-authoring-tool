@@ -14,9 +14,9 @@ export default function HeaderButtons() {
       const reader = new FileReader();
       reader.onload = async (e) => {
         const text = e.target.result;
-
         getJSONData(JSON.parse(text));
       };
+
       reader.readAsText(e.target.files[0]);
     } else {
       alert(
@@ -31,19 +31,16 @@ export default function HeaderButtons() {
         onClick={() => setUploadHidden(!isUploadHidden)}
       >
         Upload
-      </button>
-     
-        {" "}
-        <a
+      </button>{" "}
+      <a
         className="save-wrapper"
-          href={`data:text/json;charset=utf-8,${encodeURIComponent(
-            JSON.stringify(state)
-          )}`}
-          download="API.json"
-        >
-          Save
-        </a>
-  
+        href={`data:text/json;charset=utf-8,${encodeURIComponent(
+          JSON.stringify(state)
+        )}`}
+        download="API.json"
+      >
+        Save
+      </a>
       <div className="upload-file-wrapper" hidden={isUploadHidden}>
         <label htmlFor="fusk">Browse JSON</label>
         <input

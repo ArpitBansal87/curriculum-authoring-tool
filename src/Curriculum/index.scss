@@ -160,7 +160,7 @@
                 }
                 .level {
                   width: 2em;
-                  background:#6a8caf47;
+                  background: #6a8caf47;
                   height: 100%;
                   transition: all 0.1s linear;
                   margin-left: 0px;
@@ -178,7 +178,7 @@
     }
   }
 
-  .enter-standard{
+  .enter-standard {
     .standard-row {
       display: flex;
       border-bottom: 1px solid #e0dfdf;
@@ -208,7 +208,7 @@
         }
         .level {
           width: 2em;
-          background:#6a8caf47;
+          background: #6a8caf47;
           height: 100%;
           transition: all 0.1s linear;
           margin-left: 0px;
@@ -233,7 +233,6 @@
           font-weight: bold;
           font-size: 14px;
         }
-
       }
     }
   }

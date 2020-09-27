@@ -1,4 +1,4 @@
-import React, { useContext, useState ,useEffect} from "react";
+import React, { useContext, useState } from "react";
 import "./index.scss";
 import RightArrow from "./SVG/right-arrow.svg";
 import LeftArrow from "./SVG/left-arrow.svg";
@@ -13,10 +13,6 @@ export default function Index() {
   const { subject, children, childrenAllIdsOrder } = getConsumer.state;
   const chapter = children;
   const chapterAllIds = childrenAllIdsOrder;
-
-  useEffect(()=>{
-
-  })
 
   const changeOutdentInput = () => {
     if (currentIndent === "SUBHEADING") setCurrentIndent("HEADING");
@@ -120,7 +116,8 @@ export default function Index() {
                 <div className="heading-box">
                   {headingAllIds.map((headingId) => {
                     const { name } = heading[headingId];
-                    const subHeadingAllIds = heading[headingId].childrenAllIdsOrder;
+                    const subHeadingAllIds =
+                      heading[headingId].childrenAllIdsOrder;
                     const subHeading = heading[headingId].children;
                     return (
                       <React.Fragment key={headingId}>
@@ -151,13 +148,10 @@ export default function Index() {
                               className="cursor-pointer"
                               src={Trash}
                               alt="dustbin"
-                              onClick={() =>
-                               {
-                                 trashStandard(chapterId, headingId);
-                                  setCurrentIndent("HEADING");
-                              
-                              }
-                              }
+                              onClick={() => {
+                                trashStandard(chapterId, headingId);
+                                setCurrentIndent("HEADING");
+                              }}
                             />
                           </div>
                           <div className="heading-col">
@@ -227,13 +221,14 @@ export default function Index() {
                                       className="cursor-pointer"
                                       src={Trash}
                                       alt="dustbin"
-                                      onClick={() =>
-                                        {trashStandard(
+                                      onClick={() => {
+                                        trashStandard(
                                           chapterId,
                                           headingId,
                                           subHeadingId
-                                        );  setCurrentIndent("SUBHEADING");}
-                                      }
+                                        );
+                                        setCurrentIndent("SUBHEADING");
+                                      }}
                                     />
                                   </div>
                                   <div className="sub-heading-col">
