@@ -1,68 +1,130 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Curriculum Authoring Tool 
+Created a tool for teachers to author curriculum for a subject. The curriculam subject is composed of 
+```
+1. Chapters 1 
+   - Headings 1
+     - Subheadings 1
+2. Chapters 2 
+   - Headings 1
+     - Subheading 1
+     - Subheading 2
+     
+```
+     
+## About The Project
 
-## Available Scripts
+Image
 
-In the project directory, you can run:
+## Features
 
-### `yarn start`
+ - [x] Row actions - Indent/ Outdent/ Delete 
+ - [x] Preserve parent-child relations between nodes while deleting intending etc.
+   Eg. deleting an element should also delete its children
+ - [x] The text in each row should be editable like a text box
+ - [x] Load/ Save - Functionality to generate and download a JSON output and
+    to load the JSON to create the structure again   
+ - [x] No backend used
+ - [x] UI features Eg. tooltips
+ - [ ] Row actions - Move
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Features yet to implement
+- Drag and drop feature which user can move chapter heading subheading.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Downloaded API Format
+```
+{
+	"subject": "Mathematics",
+	"children": {
+		"1": {
+			"name": "c-1",
+			"children": {
+				"101": {
+					"name": "h-1",
+					"children": {
+						"1001": {
+							"name": "c-1 h-1 s-1"
+						},
+						"1002": {
+							"name": "c-1 h-1 s-2"
+						},
+						"1003": {
+							"name": "c-1 h-1 s-3"
+						},
+						"1004": {
+							"name": "c-1 h-1 s-4"
+						}
+					},
+					"childrenAllIdsOrder": [1001, 1002, 1003, 1004]
+				},
+				"102": {
+					"name": "h-2",
+					"children": {
+						"1005": {
+							"name": "c-1 h-2 s-1"
+						},
+						"1006": {
+							"name": "c-1 h-2 s-2"
+						},
+						"1007": {
+							"name": "c-1 h-2 s-3"
+						},
+						"1008": {
+							"name": "c-1 h-2 s-4"
+						}
+					},
+					"childrenAllIdsOrder": [1005, 1006, 1007, 1008]
+				},
+				"103": {
+					"name": "h-3",
+					"children": {},
+					"childrenAllIdsOrder": []
+				},
+				"104": {
+					"name": "h-4",
+					"children": {},
+					"childrenAllIdsOrder": []
+				},
+				"105": {
+					"name": "h-5",
+					"children": {},
+					"childrenAllIdsOrder": []
+				}
+			},
+			"childrenAllIdsOrder": [101, 102, 103, 104, 105]
+		}
+	},
+	"childrenAllIdsOrder": [1]
+}
+```
 
-### `yarn test`
+## Build with
+This section should list any major frameworks that you built your project using.
+- [React.js] 
+- [node-sass]
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `yarn build`
+## Installation
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Curriculam Authoring Tool requires [Node.js](https://nodejs.org/) v12+ to run.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+Install the dependencies after cloning the repo and start the server.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```sh
+$ git clone https://github.com/salil0001/curriculum-authoring-tool.git
+$ yarn install 
+$ yarn start
+```
+## Contributions
 
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+  
+1. Clone the Project
+2. Create your Feature Branch (git checkout -b feature/AmazingFeature)
+3. Commit your Changes (git commit -m 'Add some AmazingFeature')
+4. Push to the Branch (git push origin feature/AmazingFeature)
+5. Open a Pull Request
+  
+  
+   [React.js]: <https://reactjs.org/>
+   [node-sass]:<https://www.npmjs.com/package/node-sass/>
+   [Deployment-Link]:<https://www.npmjs.com/package/>

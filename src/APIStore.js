@@ -17,7 +17,7 @@ export const store = {
               name: "c-1 h-1 s-3",
             },
             1004: {
-              name: "c-1 h-1 s-2",
+              name: "c-1 h-1 s-4",
             },
           },
           childrenAllIdsOrder: [1001, 1002, 1003, 1004],
@@ -26,16 +26,16 @@ export const store = {
           name: "h-2",
           children: {
             1005: {
-              name: "c-1 h-1 s-1",
+              name: "c-1 h-2 s-3",
             },
             1006: {
-              name: "c-1 h-1 s-2",
+              name: "c-1 h-2 s-3",
             },
             1007: {
-              name: "c-1 h-1 s-3",
+              name: "c-1 h-2 s-3",
             },
             1008: {
-              name: "c-1 h-1 s-2",
+              name: "c-1 h-2 s-3",
             },
           },
           childrenAllIdsOrder: [1005, 1006, 1007, 1008],
