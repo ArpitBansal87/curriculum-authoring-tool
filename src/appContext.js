@@ -5,6 +5,10 @@ export const MyContext = React.createContext();
 export default function ContextWrapper({ children }) {
   const [state, setState] = useState(store);
 
+  const getJSONData = (data) => {
+    setState({ ...data });
+  };
+
   const HandleChangeStandard = (value, chapterId, headingId, subheadingId) => {
     const newState = state;
     if (chapterId && headingId && subheadingId) {
@@ -18,10 +22,6 @@ export default function ContextWrapper({ children }) {
     }
 
     setState({ ...newState });
-  };
-
-  const getJSONData = (data) => {
-    setState({ ...data });
   };
 
   const trashStandard = (chapterId, headingId, subheadingId) => {
@@ -75,6 +75,7 @@ export default function ContextWrapper({ children }) {
           children: {},
           childrenAllIdsOrder: [],
         };
+
         setState({ ...newState });
       } else {
         alert("There Are no chapters. Please Add chapters.");
@@ -97,6 +98,7 @@ export default function ContextWrapper({ children }) {
           ...getLastHeadingChildren.childrenAllIdsOrder,
           newId,
         ];
+        
         setState({ ...newState });
       } else {
         alert("The is no Heading in the Chapter.");
@@ -332,7 +334,7 @@ export default function ContextWrapper({ children }) {
         HandleChangeStandard,
         trashStandard,
         addStandard,
-        getJSONData
+        getJSONData,
       }}
     >
       <div className="App">{children}</div>

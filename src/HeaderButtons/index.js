@@ -1,10 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import "./index.scss";
 import { MyContext } from "../appContext";
 export default function HeaderButtons() {
-  const [isUploadHidden, setUploadHidden] = useState(true);
   const getConsumer = useContext(MyContext);
-
   const { state, getJSONData } = getConsumer;
 
   const handleFileChange = async (e) => {
@@ -26,12 +24,18 @@ export default function HeaderButtons() {
   };
   return (
     <div className="header-buttons-wrapper">
-      <button
-        className="upload-wrapper"
-        onClick={() => setUploadHidden(!isUploadHidden)}
+      <span
+        className="upload-wrapper upload-file-wrapper"
       >
-        Upload
-      </button>{" "}
+         <label htmlFor="fusk">Browse JSON</label>
+        <input
+          id="fusk"
+          type="file"
+          name="JSONFile"
+          style={{ display: "none" }}
+          onChange={handleFileChange}
+        />
+      </span>{" "}
       <a
         className="save-wrapper"
         href={`data:text/json;charset=utf-8,${encodeURIComponent(
@@ -41,16 +45,7 @@ export default function HeaderButtons() {
       >
         Save
       </a>
-      <div className="upload-file-wrapper" hidden={isUploadHidden}>
-        <label htmlFor="fusk">Browse JSON</label>
-        <input
-          id="fusk"
-          type="file"
-          name="JSONFile"
-          style={{ display: "none" }}
-          onChange={handleFileChange}
-        ></input>
-      </div>
+      
     </div>
   );
 }

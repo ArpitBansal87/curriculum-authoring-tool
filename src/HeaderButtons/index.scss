@@ -13,13 +13,11 @@
     background: #f75961;
   }
   .upload-wrapper {
-    background: #2dadba;
     min-height: 30px;
     min-width: 100px;
     margin: 0em 1em 0em 0em;
-  }
-  .upload-file-wrapper {
     height: 50px;
+
     margin: 8px 0px 0px 0px;
     label {
       background: #6a8caf;
@@ -31,6 +29,9 @@
       font-weight: bold;
       border-radius: 2px;
       font-size: 14px;
+      cursor: pointer;
     }
   }
+  
+  
 }
