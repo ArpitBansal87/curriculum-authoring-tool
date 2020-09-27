@@ -20,6 +20,10 @@ export default function ContextWrapper({ children }) {
     setState({ ...newState });
   };
 
+  const getJSONData = (data) => {
+    setState({ ...data });
+  };
+
   const trashStandard = (chapterId, headingId, subheadingId) => {
     const newState = state;
 
@@ -328,6 +332,7 @@ export default function ContextWrapper({ children }) {
         HandleChangeStandard,
         trashStandard,
         addStandard,
+        getJSONData
       }}
     >
       <div className="App">{children}</div>
