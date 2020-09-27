@@ -5,8 +5,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   position: relative;
-  width: 1180px;
-  margin: 0 auto;
 }
 
 code {

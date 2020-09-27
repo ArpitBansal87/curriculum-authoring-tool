@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState ,useEffect} from "react";
 import "./index.scss";
 import RightArrow from "./SVG/right-arrow.svg";
 import LeftArrow from "./SVG/left-arrow.svg";
@@ -7,14 +7,16 @@ import Trash from "./SVG/trash.svg";
 import { MyContext } from "../appContext";
 
 export default function Index() {
-  const [currentIndent, setCurrentIndent] = useState("HEADING");
+  const [currentIndent, setCurrentIndent] = useState("SUBHEADING");
   const [newStandard, setNewStandard] = useState("");
   const getConsumer = useContext(MyContext);
-  const { subject, children, childrenAllIds } = getConsumer.state;
+  const { subject, children, childrenAllIdsOrder } = getConsumer.state;
   const chapter = children;
-  const chapterAllIds = childrenAllIds;
+  const chapterAllIds = childrenAllIdsOrder;
 
-  useEffect(() => {});
+  useEffect(()=>{
+
+  })
 
   const changeOutdentInput = () => {
     if (currentIndent === "SUBHEADING") setCurrentIndent("HEADING");
@@ -66,7 +68,7 @@ export default function Index() {
           {chapterAllIds.map((chapterId) => {
             const { name } = chapter[chapterId];
             const heading = chapter[chapterId].children;
-            const headingAllIds = chapter[chapterId].childrenAllIds;
+            const headingAllIds = chapter[chapterId].childrenAllIdsOrder;
             return (
               <div className="subject-box" key={chapterId}>
                 <div className="subject-row">
@@ -92,7 +94,10 @@ export default function Index() {
                       className="cursor-pointer"
                       src={Trash}
                       alt="dustbin"
-                      onClick={() => trashStandard(chapterId)}
+                      onClick={() => {
+                        trashStandard(chapterId);
+                        setCurrentIndent("CHAPTER");
+                      }}
                     />
                   </div>
                   <div className="subject-col">
@@ -115,7 +120,7 @@ export default function Index() {
                 <div className="heading-box">
                   {headingAllIds.map((headingId) => {
                     const { name } = heading[headingId];
-                    const subHeadingAllIds = heading[headingId].childrenAllIds;
+                    const subHeadingAllIds = heading[headingId].childrenAllIdsOrder;
                     const subHeading = heading[headingId].children;
                     return (
                       <React.Fragment key={headingId}>
@@ -147,7 +152,11 @@ export default function Index() {
                               src={Trash}
                               alt="dustbin"
                               onClick={() =>
-                                trashStandard(chapterId, headingId)
+                               {
+                                 trashStandard(chapterId, headingId);
+                                  setCurrentIndent("HEADING");
+                              
+                              }
                               }
                             />
                           </div>
@@ -219,11 +228,11 @@ export default function Index() {
                                       src={Trash}
                                       alt="dustbin"
                                       onClick={() =>
-                                        trashStandard(
+                                        {trashStandard(
                                           chapterId,
                                           headingId,
                                           subHeadingId
-                                        )
+                                        );  setCurrentIndent("SUBHEADING");}
                                       }
                                     />
                                   </div>

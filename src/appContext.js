@@ -26,19 +26,19 @@ export default function ContextWrapper({ children }) {
     if (chapterId && headingId && subheadingId) {
       newState.children[chapterId].children[
         headingId
-      ].childrenAllIds = newState.children[chapterId].children[
+      ].childrenAllIdsOrder = newState.children[chapterId].children[
         headingId
-      ].childrenAllIds.filter((id) => id !== subheadingId);
+      ].childrenAllIdsOrder.filter((id) => id !== subheadingId);
       delete newState.children[chapterId].children[headingId].children[
         subheadingId
       ];
     } else if (chapterId && headingId) {
-      newState.children[chapterId].childrenAllIds = newState.children[
+      newState.children[chapterId].childrenAllIdsOrder = newState.children[
         chapterId
-      ].childrenAllIds.filter((id) => id !== headingId);
+      ].childrenAllIdsOrder.filter((id) => id !== headingId);
       delete newState.children[chapterId].children[headingId];
     } else if (chapterId) {
-      newState.childrenAllIds = newState.childrenAllIds.filter(
+      newState.childrenAllIdsOrder = newState.childrenAllIdsOrder.filter(
         (id) => id !== chapterId
       );
       delete newState.children[chapterId];
@@ -51,42 +51,52 @@ export default function ContextWrapper({ children }) {
     const newState = state;
     const newId = Math.random();
     if (currentStandard === "CHAPTER") {
-      newState.childrenAllIds = [...newState.childrenAllIds, newId];
+      newState.childrenAllIdsOrder = [...newState.childrenAllIdsOrder, newId];
       newState.children[newId] = {
         name: newStandard,
         children: {},
-        childrenAllIds: [],
+        childrenAllIdsOrder: [],
       };
     } else if (currentStandard === "HEADING") {
       const getLastChapterId =
-        newState.childrenAllIds[newState.childrenAllIds.length - 1];
+        newState.childrenAllIdsOrder[newState.childrenAllIdsOrder.length - 1];
 
-      newState.children[getLastChapterId].childrenAllIds = [
-        ...newState.children[getLastChapterId].childrenAllIds,
-        newId,
-      ];
-      newState.children[getLastChapterId].children[newId] = {
-        name: newStandard,
-        children: {},
-        childrenAllIds: [],
-      };
-      setState({ ...newState });
+      if (getLastChapterId) {
+        newState.children[getLastChapterId].childrenAllIdsOrder = [
+          ...newState.children[getLastChapterId].childrenAllIdsOrder,
+          newId,
+        ];
+        newState.children[getLastChapterId].children[newId] = {
+          name: newStandard,
+          children: {},
+          childrenAllIdsOrder: [],
+        };
+        setState({ ...newState });
+      } else {
+        alert("There Are no chapters. Please Add chapters.");
+      }
     } else if (currentStandard === "SUBHEADING") {
       const getLastChapterId =
-        newState.childrenAllIds[newState.childrenAllIds.length - 1];
+        newState.childrenAllIdsOrder[newState.childrenAllIdsOrder.length - 1];
 
       const getLastHeadingId =
-        newState.children[getLastChapterId].childrenAllIds[
-          newState.children[getLastChapterId].childrenAllIds.length - 1
+        newState.children[getLastChapterId].childrenAllIdsOrder[
+          newState.children[getLastChapterId].childrenAllIdsOrder.length - 1
         ];
-      const getLastHeadingChildren =
-        newState.children[getLastChapterId].children[getLastHeadingId];
 
-      getLastHeadingChildren.children[newId] = { name: newStandard };
-      getLastHeadingChildren.childrenAllIds = [
-        ...getLastHeadingChildren.childrenAllIds,
-        newId,
-      ];
+      if (getLastHeadingId) {
+        const getLastHeadingChildren =
+          newState.children[getLastChapterId].children[getLastHeadingId];
+
+        getLastHeadingChildren.children[newId] = { name: newStandard };
+        getLastHeadingChildren.childrenAllIdsOrder = [
+          ...getLastHeadingChildren.childrenAllIdsOrder,
+          newId,
+        ];
+        setState({ ...newState });
+      } else {
+        alert("The is no Heading in the Chapter.");
+      }
     }
   };
 
@@ -96,33 +106,35 @@ export default function ContextWrapper({ children }) {
     if (chapterId && headingId && subHeadingId) {
       alert("Maximum intend level reached.");
     } else if (chapterId && headingId) {
-      const { children, childrenAllIds } = newState.children[chapterId];
+      const { children, childrenAllIdsOrder } = newState.children[chapterId];
       const { name } = children[headingId];
 
       const getPreviousHeadingOrder =
-        childrenAllIds.findIndex((id) => id === headingId) - 1;
+        childrenAllIdsOrder.findIndex((id) => id === headingId) - 1;
 
       if (getPreviousHeadingOrder === -1) {
         alert("Your Chapter is having no heading.");
       } else {
-        const takeAllHeadingIds = children[headingId].childrenAllIds.splice(
+        const takeAllHeadingIds = children[
+          headingId
+        ].childrenAllIdsOrder.splice(
           0,
-          children[headingId].childrenAllIds.length
+          children[headingId].childrenAllIdsOrder.length
         );
 
-        const previousHeadId = childrenAllIds[getPreviousHeadingOrder];
+        const previousHeadId = childrenAllIdsOrder[getPreviousHeadingOrder];
 
         children[previousHeadId].children[headingId] = {
           name,
           children: {},
-          childrenAllIds: [],
+          childrenAllIdsOrder: [],
         };
         /*
          *   Merging the Children
          */
 
-        children[previousHeadId].childrenAllIds = [
-          ...children[previousHeadId].childrenAllIds,
+        children[previousHeadId].childrenAllIdsOrder = [
+          ...children[previousHeadId].childrenAllIdsOrder,
           headingId,
           ...takeAllHeadingIds,
         ];
@@ -131,21 +143,23 @@ export default function ContextWrapper({ children }) {
           children[previousHeadId].children[i] = {
             name: children[headingId].children[i].name,
             children: {},
-            childrenAllIds: [],
+            childrenAllIdsOrder: [],
           };
         }
         delete children[headingId];
 
-        const newChildrenAllIds = childrenAllIds.filter(
+        const newchildrenAllIdsOrder = childrenAllIdsOrder.filter(
           (id) => id !== headingId
         );
 
-        newState.children[chapterId].childrenAllIds = newChildrenAllIds;
+        newState.children[
+          chapterId
+        ].childrenAllIdsOrder = newchildrenAllIdsOrder;
 
         setState({ ...state });
       }
     } else if (chapterId) {
-      if (newState.childrenAllIds.length === 1) {
+      if (newState.childrenAllIdsOrder.length === 1) {
         alert("One Chapter cannot be Subhead.");
       } else {
         /**
@@ -153,41 +167,41 @@ export default function ContextWrapper({ children }) {
          * to heading and making sub-heading
          * */
         const { name } = newState.children[chapterId];
-        const { children, childrenAllIds } = newState;
+        const { children, childrenAllIdsOrder } = newState;
 
-        const getAllCurrentChapterId = children[chapterId].childrenAllIds;
+        const getAllCurrentChapterId = children[chapterId].childrenAllIdsOrder;
         const getBeforeChapterIndex =
-          childrenAllIds.findIndex((id) => id === chapterId) - 1;
-        const getBeforeChapterId = childrenAllIds[getBeforeChapterIndex];
+          childrenAllIdsOrder.findIndex((id) => id === chapterId) - 1;
+        const getBeforeChapterId = childrenAllIdsOrder[getBeforeChapterIndex];
 
         children[getBeforeChapterId].children[chapterId] = {
           name,
-          childrenAllIds: [],
+          childrenAllIdsOrder: [],
           children: {},
         };
 
-        children[getBeforeChapterId].childrenAllIds = [
-          ...children[getBeforeChapterId].childrenAllIds,
+        children[getBeforeChapterId].childrenAllIdsOrder = [
+          ...children[getBeforeChapterId].childrenAllIdsOrder,
           chapterId,
         ];
 
         for (const i of getAllCurrentChapterId) {
-          children[getBeforeChapterId].childrenAllIds = [
-            ...children[getBeforeChapterId].childrenAllIds,
+          children[getBeforeChapterId].childrenAllIdsOrder = [
+            ...children[getBeforeChapterId].childrenAllIdsOrder,
             i,
           ];
           const childNamesOfHeading = children[chapterId].children[i].name;
           children[getBeforeChapterId].children[i] = {
             name: childNamesOfHeading,
             children: {},
-            childrenAllIds: [],
+            childrenAllIdsOrder: [],
           };
         }
 
-        const newChildrenAllIds = childrenAllIds.filter(
+        const newchildrenAllIdsOrder = childrenAllIdsOrder.filter(
           (id) => id !== chapterId
         );
-        newState.childrenAllIds = newChildrenAllIds;
+        newState.childrenAllIdsOrder = newchildrenAllIdsOrder;
         delete newState.children[chapterId];
 
         setState({ ...newState });
@@ -197,25 +211,25 @@ export default function ContextWrapper({ children }) {
   const handleOutdent = (chapterId, headingId, subHeadingId) => {
     const newState = state;
     if (chapterId && headingId && subHeadingId) {
-      const { children, childrenAllIds } = newState.children[chapterId];
+      const { children, childrenAllIdsOrder } = newState.children[chapterId];
       const { name } = newState.children[chapterId].children[
         headingId
       ].children[subHeadingId];
 
-      const findSubheadingIndex = children[headingId].childrenAllIds.findIndex(
-        (id) => id === subHeadingId
-      );
+      const findSubheadingIndex = children[
+        headingId
+      ].childrenAllIdsOrder.findIndex((id) => id === subHeadingId);
 
       const extractRemainingSubHeadingIds = children[
         headingId
-      ].childrenAllIds.splice(
+      ].childrenAllIdsOrder.splice(
         findSubheadingIndex + 1,
-        children[headingId].childrenAllIds.length
+        children[headingId].childrenAllIdsOrder.length
       );
 
       children[subHeadingId] = {
         children: {},
-        childrenAllIds: extractRemainingSubHeadingIds,
+        childrenAllIdsOrder: extractRemainingSubHeadingIds,
       };
 
       const subHeadingChildren = children[headingId].children;
@@ -228,68 +242,73 @@ export default function ContextWrapper({ children }) {
       }
 
       ///REMOVING ALL ID OF SUBHEADING
-      for (const i of children[subHeadingId].childrenAllIds) {
+      for (const i of children[subHeadingId].childrenAllIdsOrder) {
         delete children[headingId].children[i];
       }
       delete children[headingId].children[subHeadingId];
       const findSubheadingIndexDelete = children[
         headingId
-      ].childrenAllIds.findIndex((id) => id === subHeadingId);
+      ].childrenAllIdsOrder.findIndex((id) => id === subHeadingId);
 
-      children[headingId].childrenAllIds.splice(findSubheadingIndexDelete, 1);
+      children[headingId].childrenAllIdsOrder.splice(
+        findSubheadingIndexDelete,
+        1
+      );
 
-      const getHeadingIndex = childrenAllIds.findIndex(
+      const getHeadingIndex = childrenAllIdsOrder.findIndex(
         (id) => id === headingId
       );
-      childrenAllIds.splice(getHeadingIndex + 1, 0, subHeadingId);
+      childrenAllIdsOrder.splice(getHeadingIndex + 1, 0, subHeadingId);
 
       setState({ ...newState });
     } else if (chapterId && headingId) {
       /* from heading
        * to chapter
        */
-      const { children, childrenAllIds } = newState;
+      const { children, childrenAllIdsOrder } = newState;
       const { name } = children[chapterId].children[headingId];
-      const findHeadingIndex = children[chapterId].childrenAllIds.findIndex(
-        (id) => id === headingId
-      );
+      const findHeadingIndex = children[
+        chapterId
+      ].childrenAllIdsOrder.findIndex((id) => id === headingId);
 
-      if (children[chapterId].children[headingId].childrenAllIds.length !== 0) {
+      if (
+        children[chapterId].children[headingId].childrenAllIdsOrder.length !== 0
+      ) {
         alert("You have Sub-heading to settle.");
       } else if (findHeadingIndex) {
-        const slicingChildren = children[chapterId].childrenAllIds.slice(
+        const slicingChildren = children[chapterId].childrenAllIdsOrder.slice(
           findHeadingIndex,
-          children[chapterId].childrenAllIds.length
+          children[chapterId].childrenAllIdsOrder.length
         );
         slicingChildren.shift();
 
         children[headingId] = {
           name,
           children: {},
-          childrenAllIds: slicingChildren,
+          childrenAllIdsOrder: slicingChildren,
         };
 
         for (const i of slicingChildren) {
           children[headingId].children[i] = {
             name: children[chapterId].children[i].name,
             children: {},
-            childrenAllIds: [],
+            childrenAllIdsOrder: [],
           };
         }
 
-        children[chapterId].childrenAllIds = children[
+        children[chapterId].childrenAllIdsOrder = children[
           chapterId
-        ].childrenAllIds.slice(0, findHeadingIndex);
+        ].childrenAllIdsOrder.slice(0, findHeadingIndex);
 
         for (const i of slicingChildren) {
           delete children[chapterId].children[i];
         }
         delete children[chapterId].children[headingId];
 
-        const getChapterIndex = childrenAllIds.findIndex(
+        const getChapterIndex = childrenAllIdsOrder.findIndex(
           (id) => id === chapterId
         );
-        newState.childrenAllIds.splice(getChapterIndex + 1, 0, headingId);
+        newState.childrenAllIdsOrder.splice(getChapterIndex + 1, 0, headingId);
 
         setState({ ...newState });
       } else {
