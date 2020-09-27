@@ -11,9 +11,9 @@ Created a tool for teachers to author curriculum for a subject. The curriculam s
      
 ```
      
-## About The Project
+## Project View
 
-Image
+![](curriculum-view.gif)
 
 ## Features
 
