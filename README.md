@@ -26,9 +26,9 @@ Created a tool for teachers to author curriculum for a subject. The curriculam s
  - [x] No backend used
  - [x] UI features Eg. tooltips
  - [x] UI Validations Eg. reaching highest or lowest indent, parent child relation 
+ - [x] Drag and drop feature which user can move chapter heading subheading
 
 ## TODO
--  Drag and drop feature which user can move chapter heading subheading
 -  Nesting with *n* number of sub children
 -  Testing
 
