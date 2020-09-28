@@ -33,7 +33,7 @@ export default function ContextWrapper({ children }) {
         swapId[0]
       );
 
-      console.log(state)
+   
     } else if (dragIds.length === 2) {
       const getDraggedHeading =
         newState.children[dragIds[0]].children[dragIds[1]];
