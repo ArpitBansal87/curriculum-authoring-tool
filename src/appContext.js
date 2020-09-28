@@ -16,20 +16,24 @@ export default function ContextWrapper({ children }) {
         (id) => id === dragIds[0]
       );
 
+     
       const getDropChapterIndex = newState.childrenAllIdsOrder.findIndex(
         (id) => id === dropIds[0]
       );
 
       const swapId = newState.childrenAllIdsOrder.splice(
-        getDropChapterIndex,
+        getDragChapterIndex
+        ,
         1
       );
 
       newState.childrenAllIdsOrder.splice(
-        getDragChapterIndex + 1,
+        getDropChapterIndex,
         0,
-        ...swapId
+        swapId[0]
       );
+
+      console.log(state)
     } else if (dragIds.length === 2) {
       const getDraggedHeading =
         newState.children[dragIds[0]].children[dragIds[1]];
