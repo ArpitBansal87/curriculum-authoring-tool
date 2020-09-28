@@ -87,7 +87,9 @@ export default function ContextWrapper({ children }) {
       const getLastChapterId =
         newState.childrenAllIdsOrder[newState.childrenAllIdsOrder.length - 1];
 
-      const getLastHeadingId =
+      if(getLastChapterId){
+
+        const getLastHeadingId =
         newState.children[getLastChapterId].childrenAllIdsOrder[
           newState.children[getLastChapterId].childrenAllIdsOrder.length - 1
         ];
@@ -106,6 +108,13 @@ export default function ContextWrapper({ children }) {
       } else {
         alert("The is no Heading in the Chapter.");
       }
+      }else{
+
+        alert("There is no Chapter.");
+
+      }
+
+     
     }
   };
 
@@ -284,11 +293,13 @@ export default function ContextWrapper({ children }) {
         children[chapterId].children[headingId].childrenAllIdsOrder.length !== 0
       ) {
         alert("You have Sub-heading to settle.");
-      } else if (findHeadingIndex) {
+      } 
+      else if (findHeadingIndex+1) {
         const slicingChildren = children[chapterId].childrenAllIdsOrder.slice(
           findHeadingIndex,
           children[chapterId].childrenAllIdsOrder.length
         );
+       
         slicingChildren.shift();
 
         children[headingId] = {
@@ -297,6 +308,8 @@ export default function ContextWrapper({ children }) {
           childrenAllIdsOrder: slicingChildren,
         };
 
+
+
         for (const i of slicingChildren) {
           children[headingId].children[i] = {
             name: children[chapterId].children[i].name,
@@ -304,7 +317,7 @@ export default function ContextWrapper({ children }) {
             childrenAllIdsOrder: [],
           };
         }
-
+        
         children[chapterId].childrenAllIdsOrder = children[
           chapterId
         ].childrenAllIdsOrder.slice(0, findHeadingIndex);

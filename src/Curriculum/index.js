@@ -7,7 +7,7 @@ import Trash from "./svg/trash.svg";
 import { MyContext } from "../appContext";
 
 export default function Index() {
-  const [currentIndent, setCurrentIndent] = useState("SUBHEADING");
+  const [currentIndent, setCurrentIndent] = useState("CHAPTER");
   const [newStandard, setNewStandard] = useState("");
   const getConsumer = useContext(MyContext);
   const { subject, children, childrenAllIdsOrder } = getConsumer.state;
@@ -364,7 +364,7 @@ export default function Index() {
                     : "sub-heading"
                 }
                 type="text"
-                placeholder="Enter the required standard. E.g Mathematics "
+                placeholder="Enter the required standard. E.g Algebra "
                 required
                 autoFocus
                 value={newStandard}
