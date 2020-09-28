@@ -21,12 +21,12 @@ export default function ContextWrapper({ children }) {
       );
 
       const swapId = newState.childrenAllIdsOrder.splice(
-        getDropChapterIndex,
+        getDragChapterIndex ,
         1
       );
 
       newState.childrenAllIdsOrder.splice(
-        getDragChapterIndex + 1,
+        getDropChapterIndex ,
         0,
         ...swapId
       );
