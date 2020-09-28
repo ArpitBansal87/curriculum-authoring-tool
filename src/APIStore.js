@@ -1,5 +1,6 @@
 export const store = {
-  subject: "Mathematics",
-  children: {},
+  subject: "mathematics",
+  children: {
+  },
   childrenAllIdsOrder: [],
 };

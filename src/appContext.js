@@ -9,9 +9,94 @@ export default function ContextWrapper({ children }) {
     setState({ ...data });
   };
 
+  const triggerDragDrop = (dragIds, dropIds) => {
+    const newState = state;
+    if (dragIds.length === 1) {
+      const getDragChapterIndex = newState.childrenAllIdsOrder.findIndex(
+        (id) => id === dragIds[0]
+      );
+
+      const getDropChapterIndex = newState.childrenAllIdsOrder.findIndex(
+        (id) => id === dropIds[0]
+      );
+
+      const swapId = newState.childrenAllIdsOrder.splice(
+        getDropChapterIndex,
+        1
+      );
+
+      newState.childrenAllIdsOrder.splice(
+        getDragChapterIndex + 1,
+        0,
+        ...swapId
+      );
+    } else if (dragIds.length === 2) {
+      const getDraggedHeading =
+        newState.children[dragIds[0]].children[dragIds[1]];
+
+      delete newState.children[dragIds[0]].children[dragIds[1]];
+      const findIndexOfDragHeading = newState.children[
+        dragIds[0]
+      ].childrenAllIdsOrder.findIndex((id) => id === dragIds[1]);
+      newState.children[dragIds[0]].childrenAllIdsOrder.splice(
+        findIndexOfDragHeading,
+        1
+      );
+
+      const getDropElementHeadingIndex = newState.children[
+        dropIds[0]
+      ].childrenAllIdsOrder.findIndex((id) => id === dropIds[1]);
+      newState.children[dropIds[0]].childrenAllIdsOrder.splice(
+        getDropElementHeadingIndex,
+        0,
+        dragIds[1]
+      );
+      newState.children[dropIds[0]].children[dragIds[1]] = {
+        ...getDraggedHeading,
+      };
+    } else if (dragIds.length === 3) {
+      const getDraggedSubChild =
+        newState.children[dragIds[0]].children[dragIds[1]].children[dragIds[2]];
+
+      delete newState.children[dragIds[0]].children[dragIds[1]].children[
+        dragIds[2]
+      ];
+
+      const findIndexOfDragSubheading = newState.children[dragIds[0]].children[
+        dragIds[1]
+      ].childrenAllIdsOrder.findIndex((id) => id === dragIds[2]);
+
+      newState.children[dragIds[0]].children[
+        dragIds[1]
+      ].childrenAllIdsOrder.splice(findIndexOfDragSubheading, 1);
+
+      const getDropElementSubheadingIndex = newState.children[
+        dropIds[0]
+      ].children[dropIds[1]].childrenAllIdsOrder.findIndex(
+        (id) => id === dropIds[2]
+      );
+
+      newState.children[dropIds[0]].children[
+        dropIds[1]
+      ].childrenAllIdsOrder.splice(
+        getDropElementSubheadingIndex,
+        0,
+        dragIds[2]
+      );
+
+      newState.children[dropIds[0]].children[dropIds[1]].children[
+        dragIds[2]
+      ] = {
+        name: getDraggedSubChild.name,
+      };
+    }
+
+    setState({ ...state });
+  };
+
   const HandleChangeStandard = (event, chapterId, headingId, subheadingId) => {
     const newState = state;
-    const {value}=event.target
+    const { value } = event.target;
 
     if (chapterId && headingId && subheadingId) {
       newState.children[chapterId].children[headingId].children[
@@ -20,11 +105,10 @@ export default function ContextWrapper({ children }) {
     } else if (chapterId && headingId) {
       newState.children[chapterId].children[headingId].name = value;
     } else if (chapterId) {
-      console.log(value)
       newState.children[chapterId].name = value;
     }
 
-   setState({...newState})
+    setState({ ...newState });
   };
 
   const trashStandard = (chapterId, headingId, subheadingId) => {
@@ -87,34 +171,29 @@ export default function ContextWrapper({ children }) {
       const getLastChapterId =
         newState.childrenAllIdsOrder[newState.childrenAllIdsOrder.length - 1];
 
-      if(getLastChapterId){
-
+      if (getLastChapterId) {
         const getLastHeadingId =
-        newState.children[getLastChapterId].childrenAllIdsOrder[
-          newState.children[getLastChapterId].childrenAllIdsOrder.length - 1
-        ];
+          newState.children[getLastChapterId].childrenAllIdsOrder[
+            newState.children[getLastChapterId].childrenAllIdsOrder.length - 1
+          ];
 
-      if (getLastHeadingId) {
-        const getLastHeadingChildren =
-          newState.children[getLastChapterId].children[getLastHeadingId];
+        if (getLastHeadingId) {
+          const getLastHeadingChildren =
+            newState.children[getLastChapterId].children[getLastHeadingId];
 
-        getLastHeadingChildren.children[newId] = { name: newStandard };
-        getLastHeadingChildren.childrenAllIdsOrder = [
-          ...getLastHeadingChildren.childrenAllIdsOrder,
-          newId,
-        ];
-        
-        setState({ ...newState });
+          getLastHeadingChildren.children[newId] = { name: newStandard };
+          getLastHeadingChildren.childrenAllIdsOrder = [
+            ...getLastHeadingChildren.childrenAllIdsOrder,
+            newId,
+          ];
+
+          setState({ ...newState });
+        } else {
+          alert("The is no Heading in the Chapter.");
+        }
       } else {
-        alert("The is no Heading in the Chapter.");
-      }
-      }else{
-
         alert("There is no Chapter.");
-
       }
-
-     
     }
   };
 
@@ -293,13 +372,12 @@ export default function ContextWrapper({ children }) {
         children[chapterId].children[headingId].childrenAllIdsOrder.length !== 0
       ) {
         alert("You have Sub-heading to settle.");
-      } 
-      else if (findHeadingIndex+1) {
+      } else if (findHeadingIndex + 1) {
         const slicingChildren = children[chapterId].childrenAllIdsOrder.slice(
           findHeadingIndex,
           children[chapterId].childrenAllIdsOrder.length
         );
-       
+
         slicingChildren.shift();
 
         children[headingId] = {
@@ -308,8 +386,6 @@ export default function ContextWrapper({ children }) {
           childrenAllIdsOrder: slicingChildren,
         };
 
-
-
         for (const i of slicingChildren) {
           children[headingId].children[i] = {
             name: children[chapterId].children[i].name,
@@ -317,7 +393,7 @@ export default function ContextWrapper({ children }) {
             childrenAllIdsOrder: [],
           };
         }
-        
+
         children[chapterId].childrenAllIdsOrder = children[
           chapterId
         ].childrenAllIdsOrder.slice(0, findHeadingIndex);
@@ -351,6 +427,7 @@ export default function ContextWrapper({ children }) {
         trashStandard,
         addStandard,
         getJSONData,
+        triggerDragDrop,
       }}
     >
       <div className="App">{children}</div>
