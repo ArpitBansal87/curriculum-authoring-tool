@@ -194,7 +194,7 @@ export default function Index() {
                               value={name}
                               onChange={(event) =>
                                 HandleChangeStandard(
-                                  event.target.value,
+                                  event,
                                   chapterId,
                                   headingId
                                 )
@@ -291,7 +291,7 @@ export default function Index() {
                                       value={name}
                                       onChange={(event) =>
                                         HandleChangeStandard(
-                                          event.target.value,
+                                          event,
                                           chapterId,
                                           headingId,
                                           subHeadingId

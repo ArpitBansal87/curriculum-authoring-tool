@@ -9,8 +9,10 @@ export default function ContextWrapper({ children }) {
     setState({ ...data });
   };
 
-  const HandleChangeStandard = (value, chapterId, headingId, subheadingId) => {
+  const HandleChangeStandard = (event, chapterId, headingId, subheadingId) => {
     const newState = state;
+    const {value}=event.target
+
     if (chapterId && headingId && subheadingId) {
       newState.children[chapterId].children[headingId].children[
         subheadingId
@@ -18,10 +20,11 @@ export default function ContextWrapper({ children }) {
     } else if (chapterId && headingId) {
       newState.children[chapterId].children[headingId].name = value;
     } else if (chapterId) {
+      console.log(value)
       newState.children[chapterId].name = value;
     }
 
-    setState({ ...newState });
+   setState({...newState})
   };
 
   const trashStandard = (chapterId, headingId, subheadingId) => {
