@@ -11,6 +11,9 @@ export default function Index() {
   const [newStandard, setNewStandard] = useState("");
   const getConsumer = useContext(MyContext);
   const { subject, children, childrenAllIdsOrder } = getConsumer.state;
+  const { triggerDragDrop } = getConsumer;
+  const [dragOverIds, setDragOverIds] = useState([]);
+  const [dragStartIds, setDragStartIds] = useState([]);
   const chapter = children;
   const chapterAllIds = childrenAllIdsOrder;
 
@@ -21,6 +24,22 @@ export default function Index() {
   const changeIndentInput = () => {
     if (currentIndent === "CHAPTER") setCurrentIndent("HEADING");
     else if (currentIndent === "HEADING") setCurrentIndent("SUBHEADING");
+  };
+
+  const handleDragOverIds = (ids) => {
+    setDragOverIds([...ids]);
+  };
+  const handleDragDropStartIds = (ids) => {
+    setDragStartIds([...ids]);
+  };
+  const dragDropEndHandler = () => {
+    if (dragOverIds.length !== dragStartIds.length) {
+      alert(
+        "Parent element cannot be a chilren E.g Chapter cannot be Heading or Subheading."
+      );
+    } else {
+      triggerDragDrop(dragStartIds, dragOverIds);
+    }
   };
   const {
     handleIndent,
@@ -68,9 +87,24 @@ export default function Index() {
             return (
               <div className="subject-box" key={chapterId}>
                 <div className="subject-row">
-                  <div className="subject-col">
+                  <div
+                    className="subject-col"
+                    onDragOver={() => {
+                      handleDragOverIds([chapterId]);
+                    }}
+                  >
                     <div className="tooltip-wrapper">
-                      <img className="cursor-pointer" src={Move} alt="move" />
+                      <img
+                        className="cursor-pointer"
+                        src={Move}
+                        alt="move"
+                        onDragStart={() => {
+                          handleDragDropStartIds([chapterId]);
+                        }}
+                        onDragEnd={() => {
+                          dragDropEndHandler();
+                        }}
+                      />
                       <span className="tooltiptext">Move</span>
                     </div>{" "}
                     <div className="tooltip-wrapper">
@@ -134,12 +168,26 @@ export default function Index() {
                     return (
                       <React.Fragment key={headingId}>
                         <div className="heading-row" key={headingId}>
-                          <div className="heading-col">
+                          <div
+                            className="heading-col"
+                            onDragOver={() => {
+                              handleDragOverIds([chapterId, headingId]);
+                            }}
+                          >
                             <div className="tooltip-wrapper">
                               <img
                                 className="cursor-pointer"
                                 src={Move}
                                 alt="move"
+                                onDragStart={() => {
+                                  handleDragDropStartIds([
+                                    chapterId,
+                                    headingId,
+                                  ]);
+                                }}
+                                onDragEnd={() => {
+                                  dragDropEndHandler();
+                                }}
                               />{" "}
                               <span className="tooltiptext">Move</span>
                             </div>
@@ -212,12 +260,31 @@ export default function Index() {
                                   className="sub-heading-row"
                                   key={subHeadingId}
                                 >
-                                  <div className="sub-heading-col">
+                                  <div
+                                    className="sub-heading-col"
+                                    onDragOver={() => {
+                                      handleDragOverIds([
+                                        chapterId,
+                                        headingId,
+                                        subHeadingId,
+                                      ]);
+                                    }}
+                                  >
                                     <div className="tooltip-wrapper">
                                       <img
                                         className="cursor-pointer"
                                         src={Move}
                                         alt="move"
+                                        onDragStart={() => {
+                                          handleDragDropStartIds([
+                                            chapterId,
+                                            headingId,
+                                            subHeadingId,
+                                          ]);
+                                        }}
+                                        onDragEnd={() => {
+                                          dragDropEndHandler();
+                                        }}
                                       />{" "}
                                       <span className="tooltiptext">Move</span>
                                     </div>
